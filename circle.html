@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>可縮放的圓形圖案</title>
+  <style>
+    canvas {
+      display: block;
+      margin: 0 auto;
+      background-color: #f5f5f5;
+      cursor: grab;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="mapCanvas" width="800" height="600"></canvas>
+  <script>
+    const canvas = document.getElementById("mapCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let scale = 1; // 初始縮放比例
+    let offsetX = canvas.width / 2; // x 軸偏移量
+    let offsetY = canvas.height / 2; // y 軸偏移量
+    let startX = 0, startY = 0, isDragging = false;
+
+    // 繪製圓形
+    function draw() {
+      ctx.save(); // 儲存當前狀態
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除畫布
+      ctx.translate(offsetX, offsetY); // 平移到當前偏移位置
+      ctx.scale(scale, scale); // 設定縮放比例
+
+      // 繪製中心的圓形圖案
+      ctx.beginPath();
+      ctx.arc(0, 0, 50, 0, 2 * Math.PI); // 半徑 50 的圓形
+      ctx.fillStyle = "#3498db";
+      ctx.fill();
+      ctx.lineWidth = 5 / scale; // 線條寬度隨縮放比例變化
+      ctx.strokeStyle = "#2980b9";
+      ctx.stroke();
+
+      // 繪製內部輔助線
+      ctx.beginPath();
+      ctx.moveTo(-50, 0);
+      ctx.lineTo(50, 0);
+      ctx.moveTo(0, -50);
+      ctx.lineTo(0, 50);
+      ctx.strokeStyle = "#34495e";
+      ctx.lineWidth = 1 / scale;
+      ctx.stroke();
+
+      ctx.restore(); // 還原狀態
+    }
+
+    // 滾輪事件處理：控制縮放
+    canvas.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const mouseX = e.offsetX;
+      const mouseY = e.offsetY;
+
+      // 計算滑鼠位置相對於 canvas 的比例
+      const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1; // 縮小或放大
+      const newScale = scale * zoomFactor;
+
+      // 調整偏移量，確保縮放中心為滑鼠位置
+      offsetX -= (mouseX - offsetX) * (1 - zoomFactor);
+      offsetY -= (mouseY - offsetY) * (1 - zoomFactor);
+
+      scale = newScale;
+      draw();
+    });
+
+    // 滑鼠拖曳事件處理：控制平移
+    canvas.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startX = e.offsetX;
+      startY = e.offsetY;
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+
+      const dx = e.offsetX - startX;
+      const dy = e.offsetY - startY;
+
+      offsetX += dx;
+      offsetY += dy;
+
+      startX = e.offsetX;
+      startY = e.offsetY;
+
+      draw();
+    });
+
+    canvas.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
+    canvas.addEventListener("mouseleave", () => {
+      isDragging = false;
+    });
+
+    // 初次繪製
+    draw();
+  </script>
+</body>
+</html>
