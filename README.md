@@ -18,5 +18,5 @@
     - CDN
 
 # Foundation
-# Mastery
+
 # Portfolio
