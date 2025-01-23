@@ -23,3 +23,4 @@
 - [OpenSBI](https://github.com/riscv-software-src/opensbi)
 
 # Hardware
+- CPU
