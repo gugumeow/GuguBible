@@ -24,3 +24,7 @@
 
 # Hardware
 - CPU
+  - RISC-V
+  - x64/x86
+  - ARM
+  - Others
