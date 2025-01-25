@@ -17,6 +17,7 @@
   - kernel.c
   - common.h
   - common.c
+- QEMU virt for testing
 - [Compiler Explorer](https://godbolt.org/)
 
 # Software
