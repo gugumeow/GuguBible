@@ -29,3 +29,6 @@
   - x64/x86
   - ARM
   - Others
+- Display Monitor
+- Speaker
+- Input / Output
