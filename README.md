@@ -24,6 +24,9 @@
 - [OpenSBI](https://github.com/riscv-software-src/opensbi)
 
 # Hardware
+- Digital Logical Design
+- IC Layout
+- CMOS Implement
 - CPU
   - RISC-V
   - x64/x86
