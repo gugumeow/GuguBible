@@ -29,7 +29,7 @@
 - CMOS Implement
 
 # Units
-- CPU
+- CPU / Microprocessor
   - RISC-V
   - x64/x86
   - ARM
